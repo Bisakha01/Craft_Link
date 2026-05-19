@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Craft_Link — Handmade Marketplace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #FAF3E0;
+      --bg2:      #F0E0C0;
+      --accent:   #C4763A;
+      --accent2:  #A85E28;
+      --dark:     #3B2A1A;
+      --mid:      #6B4C2A;
+      --light:    #FFF8F0;
+      --white:    #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--dark); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(250,243,224,0.93);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #E5D0A8;
+      padding: 0 6%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--accent); text-decoration: none; }
+    .nav-logo span { color: var(--dark); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--mid); font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: var(--white) !important; padding: 0.5rem 1.2rem; border-radius: 8px; transition: background 0.2s !important; }
+    .nav-cta:hover { background: var(--accent2) !important; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 90vh;
+      display: flex; align-items: center; padding: 0 6%;
+      background: radial-gradient(ellipse 60% 70% at 70% 50%, #E8C99A55 0%, transparent 70%), var(--bg);
+    }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; width: 100%; max-width: 1200px; margin: 0 auto; }
+    .hero-badge { display: inline-block; background: #F5DEB3; color: var(--accent); border: 1px solid #E5C080; border-radius: 50px; padding: 0.35rem 1rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 1.2rem; }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 4vw, 3.8rem); line-height: 1.15; color: var(--dark); margin-bottom: 1.2rem; }
+    .hero-title em { font-style: normal; color: var(--accent); }
+    .hero-sub { font-size: 1.05rem; line-height: 1.7; color: var(--mid); max-width: 480px; margin-bottom: 2.2rem; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { display: inline-block; background: var(--accent); color: var(--white); text-decoration: none; padding: 0.85rem 2rem; border-radius: 10px; font-weight: 600; font-size: 1rem; transition: background 0.2s, transform 0.15s; border: none; cursor: pointer; }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+    .btn-outline { display: inline-block; background: transparent; color: var(--accent); text-decoration: none; padding: 0.85rem 2rem; border-radius: 10px; font-weight: 600; font-size: 1rem; border: 2px solid var(--accent); transition: background 0.2s, color 0.2s, transform 0.15s; cursor: pointer; }
+    .btn-outline:hover { background: var(--accent); color: var(--white); transform: translateY(-2px); }
+    .hero-visual { display: flex; justify-content: center; align-items: center; }
+    .hero-card-stack { position: relative; width: 360px; height: 420px; }
+    .hcard { position: absolute; background: var(--white); border-radius: 18px; box-shadow: 0 8px 40px #C4763A22; overflow: hidden; }
+    .hcard-main { width: 300px; height: 360px; top: 30px; left: 30px; display: flex; flex-direction: column; }
+    .hcard-accent { width: 200px; height: 220px; top: 0; left: 0; background: #FDF0DC; border: 2px solid #E5C97A; z-index: -1; transform: rotate(-6deg); }
+    .hcard-img { width: 100%; height: 200px; background: linear-gradient(135deg,#F5DEB3 0%,#E8C090 100%); display: flex; align-items: center; justify-content: center; font-size: 5rem; }
+    .hcard-body { padding: 1.2rem; }
+    .hcard-tag { font-size: 0.7rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.4rem; }
+    .hcard-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--dark); margin-bottom: 0.3rem; }
+    .hcard-price { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+    .hcard-artist { font-size: 0.8rem; color: var(--mid); margin-top: 0.2rem; }
+
+    /* ── DEMO BANNER ── */
+    .demo-banner {
+      background: #3B2A1A;
+      color: #F5DEB3;
+      text-align: center;
+      padding: 0.65rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+    .demo-banner strong { color: var(--accent); }
+
+    /* ── STATS ── */
+    .stats-band { background: var(--accent); color: var(--white); padding: 2rem 6%; display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap; }
+    .stat-item { text-align: center; }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 800; }
+    .stat-label { font-size: 0.85rem; opacity: 0.85; margin-top: 0.2rem; }
+
+    /* ── SECTION SHARED ── */
+    .section-label { text-align: center; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 0.7rem; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.8rem); text-align: center; color: var(--dark); margin-bottom: 0.8rem; }
+    .section-sub { text-align: center; color: var(--mid); font-size: 1rem; line-height: 1.6; max-width: 560px; margin: 0 auto 3.5rem; }
+
+    /* ── FEATURED PRODUCTS ── */
+    #products { padding: 6rem 6%; background: var(--light); }
+    .products-tabs { display: flex; justify-content: center; gap: 0.6rem; margin-bottom: 2.8rem; flex-wrap: wrap; }
+    .tab-btn {
+      padding: 0.5rem 1.3rem; border-radius: 50px; font-size: 0.88rem; font-weight: 600;
+      border: 1.5px solid #D9BF90; background: transparent; color: var(--mid); cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn.active, .tab-btn:hover { background: var(--accent); color: var(--white); border-color: var(--accent); }
+
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.6rem; max-width: 1200px; margin: 0 auto; }
+
+    .product-card {
+      background: var(--white); border-radius: 16px; overflow: hidden;
+      border: 1px solid #EED8B0;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .product-card:hover { transform: translateY(-5px); box-shadow: 0 14px 40px #C4763A25; }
+
+    .product-thumb {
+      width: 100%; height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+      position: relative;
+    }
+    .product-badge {
+      position: absolute; top: 10px; left: 10px;
+      background: var(--accent); color: var(--white);
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+      padding: 0.25rem 0.65rem; border-radius: 50px; letter-spacing: 0.5px;
+    }
+    .product-badge.new { background: #2E8B57; }
+    .product-badge.popular { background: #B5451B; }
+
+    .product-info { padding: 1rem 1.1rem 1.2rem; }
+    .product-category { font-size: 0.72rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 0.3rem; }
+    .product-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--dark); margin-bottom: 0.25rem; }
+    .product-desc { font-size: 0.82rem; color: var(--mid); line-height: 1.5; margin-bottom: 0.7rem; }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; }
+    .product-price { font-size: 1.1rem; font-weight: 700; color: var(--accent); }
+    .product-seller { font-size: 0.75rem; color: #A08060; }
+    .product-stars { font-size: 0.75rem; color: #C4763A; margin-bottom: 0.2rem; }
+
+    .add-btn {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--accent); color: var(--white);
+      border: none; font-size: 1.3rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .add-btn:hover { background: var(--accent2); transform: scale(1.1); }
+
+    .coming-soon-overlay {
+      width: 100%; height: 200px;
+      background: linear-gradient(135deg, #EED8B050, #F5DEB350);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 0.5rem;
+    }
+    .coming-soon-overlay .cs-icon { font-size: 2.8rem; opacity: 0.5; }
+    .coming-soon-overlay .cs-label {
+      font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--mid); opacity: 0.7;
+    }
+
+    /* ── HOW IT WORKS ── */
+    #how-it-works { padding: 6rem 6%; background: var(--bg); }
+    .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto; }
+    .step-card { background: var(--white); border-radius: 16px; padding: 2rem 1.8rem; box-shadow: 0 4px 24px #C4763A10; border: 1px solid #EED8B0; transition: transform 0.2s, box-shadow 0.2s; }
+    .step-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px #C4763A22; }
+    .step-icon { width: 56px; height: 56px; border-radius: 14px; background: #FDF0DC; border: 1.5px solid #E5C080; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 1.2rem; }
+    .step-num { font-size: 0.75rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.4rem; }
+    .step-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--dark); margin-bottom: 0.6rem; }
+    .step-desc { font-size: 0.9rem; color: var(--mid); line-height: 1.65; }
+
+    /* ── FEATURES ── */
+    #features { padding: 6rem 6%; background: var(--light); }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem; max-width: 1100px; margin: 0 auto; }
+    .feature-card { background: var(--white); border-radius: 16px; padding: 1.8rem; border: 1px solid #EED8B0; display: flex; gap: 1rem; align-items: flex-start; transition: box-shadow 0.2s, transform 0.2s; }
+    .feature-card:hover { box-shadow: 0 8px 30px #C4763A18; transform: translateY(-3px); }
+    .feature-icon { font-size: 1.8rem; flex-shrink: 0; }
+    .feature-title { font-weight: 700; font-size: 1rem; color: var(--dark); margin-bottom: 0.35rem; }
+    .feature-desc { font-size: 0.88rem; color: var(--mid); line-height: 1.6; }
+
+    /* ── CONTACT ── */
+    #contact { padding: 6rem 6%; background: var(--bg2); text-align: center; }
+    .contact-card { background: var(--white); border-radius: 24px; padding: 3.5rem 2rem; max-width: 600px; margin: 0 auto; box-shadow: 0 8px 40px #C4763A20; border: 1px solid #E8D0A0; }
+    .contact-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .contact-title { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--dark); margin-bottom: 0.7rem; }
+    .contact-sub { color: var(--mid); font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem; }
+    .btn-call { display: inline-flex; align-items: center; gap: 0.7rem; background: var(--accent); color: var(--white); text-decoration: none; padding: 1rem 2.4rem; border-radius: 50px; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.5px; box-shadow: 0 6px 24px #C4763A50; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; }
+    .btn-call:hover { background: var(--accent2); transform: translateY(-3px); box-shadow: 0 10px 32px #C4763A70; }
+    .btn-call svg { width: 22px; height: 22px; fill: currentColor; }
+    .contact-note { margin-top: 1.2rem; font-size: 0.82rem; color: #A07050; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--dark); color: #D4B896; padding: 2.5rem 6%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--accent); }
+    .footer-logo span { color: #D4B896; }
+    .footer-copy { font-size: 0.82rem; opacity: 0.7; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a { text-decoration: none; color: #D4B896; font-size: 0.85rem; opacity: 0.7; transition: opacity 0.2s; }
+    .footer-links a:hover { opacity: 1; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      nav .nav-links { display: none; }
+      .stats-band { gap: 2rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DEMO BANNER -->
+  <div class="demo-banner">
+    🎨 <strong>Craft_Link</strong> — Handcrafted Art &amp; Decor for your Home &amp; Gifting. <strong>More products being added soon!</strong>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">Craft<span>_Link</span></a>
+    <ul class="nav-links">
+      <li><a href="#products">Shop</a></li>
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="hero-badge">🎁 Art &amp; Craft Shop — Home Decor &amp; Gifting</div>
+        <h1 class="hero-title">
+          Beautiful Art &amp;<br/>
+          <em>Handcrafted</em><br/>
+          Home Décor
+        </h1>
+        <p class="hero-sub">
+          Craft_Link is your online destination for unique, handcrafted art pieces —
+          from elegant idols &amp; figurines to stunning wall décor and flower vases.
+          Perfect for gifting or decorating your home. 🌸
+        </p>
+        <div class="hero-actions">
+          <a href="#products" class="btn-primary">Shop Now</a>
+          <a href="#contact" class="btn-outline">Contact Us</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card-stack">
+          <div class="hcard hcard-accent"></div>
+          <div class="hcard hcard-main">
+            <div class="hcard-img">🌸</div>
+            <div class="hcard-body">
+              <div class="hcard-tag">Idols &amp; Figurines</div>
+              <div class="hcard-name">Girl Figurine Planter</div>
+              <div class="hcard-price">₹650</div>
+              <div class="hcard-artist">Incl. Shipping</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-band">
+    <div class="stat-item"><div class="stat-num">🪆</div><div class="stat-label">Idols &amp; Figurines</div></div>
+    <div class="stat-item"><div class="stat-num">🖼️</div><div class="stat-label">Wall Decor &amp; Hangings</div></div>
+    <div class="stat-item"><div class="stat-num">🌸</div><div class="stat-label">Flower Vases</div></div>
+    <div class="stat-item"><div class="stat-num">🎁</div><div class="stat-label">Perfect for Gifting</div></div>
+  </div>
+
+  <!-- FEATURED PRODUCTS -->
+  <section id="products">
+    <div class="section-label">Our Collection</div>
+    <h2 class="section-title">Shop Our Crafts</h2>
+    <p class="section-sub">Handcrafted with love — each piece is unique and makes a perfect addition to your home or a thoughtful gift for someone special. 🎁</p>
+
+    <div class="products-tabs">
+      <button class="tab-btn active">All</button>
+      <button class="tab-btn">Idols &amp; Figurines</button>
+      <button class="tab-btn">Wall Decor</button>
+      <button class="tab-btn">Flower Vase</button>
+    </div>
+
+    <div class="products-grid">
+
+      <!-- Card 1 — Idol Placeholder -->
+      <div class="product-card" style="border: 2px dashed #D9BF90;">
+        <div class="coming-soon-overlay" style="background:linear-gradient(135deg,#FDF0DC55,#F5DEB355);">
+          <div class="cs-icon">🪆</div>
+          <div class="cs-label">Coming Soon</div>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Idols &amp; Figurines</div>
+          <div class="product-name" style="color:#B0906A;">New Arrival</div>
+          <div class="product-desc" style="color:#C0A080; font-style:italic;">A beautiful handcrafted idol — photo &amp; details coming soon.</div>
+          <div class="product-footer"><div class="product-price" style="color:#C0A080;">₹ Coming Soon</div></div>
+        </div>
+      </div>
+
+      <!-- Card 2 — Wall Decor Placeholder -->
+      <div class="product-card" style="border: 2px dashed #D9BF90;">
+        <div class="coming-soon-overlay" style="background:linear-gradient(135deg,#E8D5C055,#D4A87055);">
+          <div class="cs-icon">🖼️</div>
+          <div class="cs-label">Coming Soon</div>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Wall Decor &amp; Wall Hanging</div>
+          <div class="product-name" style="color:#B0906A;">New Arrival</div>
+          <div class="product-desc" style="color:#C0A080; font-style:italic;">A stunning wall hanging piece — photo &amp; details coming soon.</div>
+          <div class="product-footer"><div class="product-price" style="color:#C0A080;">₹ Coming Soon</div></div>
+        </div>
+      </div>
+
+      <!-- Card 3 — Flower Vase Placeholder -->
+      <div class="product-card" style="border: 2px dashed #D9BF90;">
+        <div class="coming-soon-overlay" style="background:linear-gradient(135deg,#FCE4EC55,#C8E6C955);">
+          <div class="cs-icon">🌸</div>
+          <div class="cs-label">Coming Soon</div>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Flower Vase</div>
+          <div class="product-name" style="color:#B0906A;">New Arrival</div>
+          <div class="product-desc" style="color:#C0A080; font-style:italic;">A gorgeous handcrafted flower vase — photo &amp; details coming soon.</div>
+          <div class="product-footer"><div class="product-price" style="color:#C0A080;">₹ Coming Soon</div></div>
+        </div>
+      </div>
+
+      <!-- Card 8 — Girl Figurine Planter -->
+      <div class="product-card">
+        <div class="product-thumb" style="background:#f5f0eb; padding:0; overflow:hidden;">
+          <img src="planter.png" alt="Girl Figurine Planter" style="width:100%; height:100%; object-fit:cover;" />
+          <span class="product-badge new">New</span>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Home Decor</div>
+          <div class="product-stars">★★★★★</div>
+          <div class="product-name">Girl Figurine Planter</div>
+          <div class="product-desc">Charming girl figurine planter with soft artistic details &amp; a stylish floral pot. Adds warmth &amp; creativity to any desk, shelf, or coffee table. Perfect for gifting! 🎁</div>
+          <div class="product-footer">
+            <div>
+              <div class="product-price">₹ 650</div>
+              <div class="product-seller">Incl. Shipping</div>
+            </div>
+            <button class="add-btn">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 9 — Your Listing Placeholder -->
+      <div class="product-card" style="border: 2px dashed #D9BF90;">
+        <div class="coming-soon-overlay">
+          <div class="cs-icon">📷</div>
+          <div class="cs-label">Your Product Here</div>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Your Category</div>
+          <div class="product-name" style="color:#B0906A;">Your Product Name</div>
+          <div class="product-desc" style="color:#C0A080; font-style:italic;">Your description and photo will appear here.</div>
+          <div class="product-footer">
+            <div class="product-price" style="color:#C0A080;">₹ Your Price</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works">
+    <div class="section-label">How to Order</div>
+    <h2 class="section-title">Easy Ordering Process</h2>
+    <p class="section-sub">Getting your favourite handcrafted piece delivered to your door is simple and hassle-free.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-icon">🛍️</div>
+        <div class="step-num">Step 01</div>
+        <div class="step-title">Browse &amp; Choose</div>
+        <p class="step-desc">Explore our collection of handcrafted idols, wall décor, and flower vases. Pick the one that speaks to you.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">📞</div>
+        <div class="step-num">Step 02</div>
+        <div class="step-title">Call or Message Us</div>
+        <p class="step-desc">Contact us directly with your order. We'll confirm availability, size, and answer any questions you have.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">📦</div>
+        <div class="step-num">Step 03</div>
+        <div class="step-title">We Pack with Care</div>
+        <p class="step-desc">Every item is carefully packed to ensure it reaches you in perfect condition — safe and beautiful.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🚚</div>
+        <div class="step-num">Step 04</div>
+        <div class="step-title">Delivered to You</div>
+        <p class="step-desc">Fast and reliable shipping included in the price. Your handcrafted piece arrives right at your doorstep.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="section-label">Why Choose Us</div>
+    <h2 class="section-title">Why Shop at Craft_Link?</h2>
+    <p class="section-sub">Every piece we offer is made with passion, love, and artistry. Here's what makes us special.</p>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon">🤲</div><div><div class="feature-title">100% Handcrafted</div><p class="feature-desc">Every product is made by hand with care and attention to detail. No mass production — just pure artisan craft.</p></div></div>
+      <div class="feature-card"><div class="feature-icon">🎁</div><div><div class="feature-title">Perfect for Gifting</div><p class="feature-desc">Looking for a unique and thoughtful gift? Our art pieces make memorable gifts for any occasion.</p></div></div>
+      <div class="feature-card"><div class="feature-icon">🚚</div><div><div class="feature-title">Shipping Included</div><p class="feature-desc">No hidden charges — the price you see includes shipping. We deliver right to your doorstep.</p></div></div>
+      <div class="feature-card"><div class="feature-icon">🏠</div><div><div class="feature-title">Elevate Your Space</div><p class="feature-desc">From idols to wall hangings to flower vases — our pieces add warmth, elegance, and personality to any room.</p></div></div>
+      <div class="feature-card"><div class="feature-icon">✨</div><div><div class="feature-title">Unique Pieces</div><p class="feature-desc">Each item is one-of-a-kind. You won't find these designs anywhere else — truly special and exclusive.</p></div></div>
+      <div class="feature-card"><div class="feature-icon">💬</div><div><div class="feature-title">Personal Service</div><p class="feature-desc">Call us directly — we're happy to help you choose the right piece or arrange a custom order for you.</p></div></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">We'd Love to Hear From You</h2>
+    <p class="section-sub">Want to place an order, ask about a product, or arrange a custom piece? We'd love to hear from you!</p>
+    <div class="contact-card">
+      <div class="contact-icon">📞</div>
+      <h3 class="contact-title">Call Craft_Link</h3>
+      <p class="contact-sub">Our team is available to help you choose the perfect piece, answer questions about products, or arrange a special custom order for gifting.</p>
+      <a href="tel:983805071" class="btn-call">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/>
+        </svg>
+        Call: 983805071
+      </a>
+      <p class="contact-note">Tap the button on mobile to dial directly</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Craft<span>_Link</span></div>
+    <p class="footer-copy">&copy; 2026 Craft_Link. All rights reserved.</p>
+    <ul class="footer-links">
+      <li><a href="#products">Shop</a></li>
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    // Tab filter UI (visual only for demo)
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
