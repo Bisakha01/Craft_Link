@@ -275,16 +275,16 @@
     <p class="section-sub">Handcrafted with love — each piece is unique and makes a perfect addition to your home or a thoughtful gift for someone special. 🎁</p>
 
     <div class="products-tabs">
-      <button class="tab-btn active">All</button>
-      <button class="tab-btn">Idols &amp; Figurines</button>
-      <button class="tab-btn">Wall Decor</button>
-      <button class="tab-btn">Flower Vase</button>
+      <button class="tab-btn active" data-tab="all">All</button>
+      <button class="tab-btn" data-tab="idols">Idols &amp; Figurines</button>
+      <button class="tab-btn" data-tab="wall-decor">Wall Decor</button>
+      <button class="tab-btn" data-tab="flower-vase">Flower Vase</button>
     </div>
 
     <div class="products-grid">
 
       <!-- Card 1 — Potter Idol -->
-      <div class="product-card">
+      <div class="product-card" data-category="idols">
         <div class="product-thumb" style="background:#f5f0eb; padding:0; overflow:hidden;">
           <img src="potter.jpg" alt="Handcrafted Potter Idol" style="width:100%; height:100%; object-fit:cover;" />
           <span class="product-badge new">New</span>
@@ -305,7 +305,7 @@
       </div>
 
       <!-- Card 2 — Wall Decor Placeholder -->
-      <div class="product-card" style="border: 2px dashed #D9BF90;">
+      <div class="product-card" data-category="wall-decor" style="border: 2px dashed #D9BF90;">
         <div class="coming-soon-overlay" style="background:linear-gradient(135deg,#E8D5C055,#D4A87055);">
           <div class="cs-icon">🖼️</div>
           <div class="cs-label">Coming Soon</div>
@@ -319,7 +319,7 @@
       </div>
 
       <!-- Card 3 — Flower Vase Placeholder -->
-      <div class="product-card" style="border: 2px dashed #D9BF90;">
+      <div class="product-card" data-category="flower-vase" style="border: 2px dashed #D9BF90;">
         <div class="coming-soon-overlay" style="background:linear-gradient(135deg,#FCE4EC55,#C8E6C955);">
           <div class="cs-icon">🌸</div>
           <div class="cs-label">Coming Soon</div>
@@ -333,7 +333,7 @@
       </div>
 
       <!-- Card 8 — Girl Figurine Planter -->
-      <div class="product-card">
+      <div class="product-card" data-category="idols">
         <div class="product-thumb" style="background:#f5f0eb; padding:0; overflow:hidden;">
           <img src="planter.png" alt="Girl Figurine Planter" style="width:100%; height:100%; object-fit:cover;" />
           <span class="product-badge new">New</span>
@@ -354,7 +354,7 @@
       </div>
 
       <!-- Card 9 — Your Listing Placeholder -->
-      <div class="product-card" style="border: 2px dashed #D9BF90;">
+      <div class="product-card" data-category="all" style="border: 2px dashed #D9BF90;">
         <div class="coming-soon-overlay">
           <div class="cs-icon">📷</div>
           <div class="cs-label">Your Product Here</div>
@@ -451,11 +451,16 @@
   </footer>
 
   <script>
-    // Tab filter UI (visual only for demo)
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+
+        const tab = btn.dataset.tab;
+        document.querySelectorAll('.product-card').forEach(card => {
+          const cat = card.dataset.category;
+          card.style.display = (tab === 'all' || cat === tab || cat === 'all') ? '' : 'none';
+        });
       });
     });
   </script>
